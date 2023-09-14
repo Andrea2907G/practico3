@@ -1,0 +1,36 @@
+#contenedor_nombre {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#contenedor_nombre label {
+    margin-bottom: 25px;
+    font-family: 'Raleway', sans-serif;
+    font-size: clamp(1.5vw, 2vw, 3rem);
+    color: rgb(255, 255, 255);
+}
+
+input {
+    margin-bottom: 35px;
+    padding: 0 10px;
+    height: 4vw;
+    width: 18vw;
+    background: #44447B;
+    box-shadow: 10px 8px 8px rgba(0, 0, 0, 0.306);
+    border:none;
+    font-family: 'Indie Flower', cursive;
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    border-radius: 15px;
+    transition: border 0.3s; 
+    outline: none;
+    transition: .5s; 
+}
+
+input:focus, input:active {
+    transform: scale(1.1, 1.1);
+}
+

@@ -1,0 +1,66 @@
+button {
+    font-family: 'Indie Flower', cursive;
+    font-weight: 500;
+    color: white;
+    text-shadow:
+    -1px -2px 0 black,
+    2px -1px 0 black,
+    -1px 2px 0 black,
+    2px 1px 0 black;
+    background-color:#010128;
+    border: 4px solid #44447B;
+    border-radius: 15px;
+    box-shadow: 4px 5px 5px rgba(0, 0, 0, 0.306);
+    height: 5vw;
+    width: 15vw;
+    text-align: center;
+    cursor: pointer;
+    transition: all .4s;
+}
+
+
+
+button:active {
+    border: 4px solid #ffffff;
+}
+
+.boton-jugar {
+    margin-bottom: 50px;
+    transform: translate(0%, 35%) rotate(6deg);
+    font-size: clamp(0.8vw, 3vw, 2.8rem);
+}
+
+.boton-jugar:hover {
+    border: 4px solid #ffffff;
+    box-shadow: none;
+    transform: translate(0%, 35%) rotate(-6deg);
+}
+
+.boton-jugar:active {
+    border: 4px solid #ffffff;
+}
+
+.boton-siguiente {
+    display: none;
+    font-size: clamp(0.8vw, 2.5vw, 2.6rem);
+    box-shadow: -4px 8px 8px -3px rgba(0, 0, 0, 0.895),
+    4px 0px 8px -3px rgb(0, 0, 0, 0.895);
+}
+
+.boton-siguiente:hover, .boton.nueva-partida:hover {
+box-shadow: none;
+transform: translateY(5px);
+}
+
+.boton-siguiente:active {
+box-shadow: none;
+}
+
+.boton.nueva-partida {
+    font-size: clamp(0.8vw, 2vw, 2.5rem);
+} 
+
+.mostrar-ventana-modal {
+    opacity: 1;
+    pointer-events: unset;
+}
