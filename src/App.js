@@ -1,15 +1,21 @@
 import IngresaNombre from './componentes/IngresaNombre';
-import { useRef } from 'react';
-/* import Juego from './componentes/Juego';
+import { useRef, useState } from 'react';
+import Juego from './componentes/Juego';
 import TableroPuntaje from './componentes/TableroPuntaje';
-import Resultado from './componentes/Resultado' */
+/* import Resultado from './componentes/Resultado'  */
 
 import './App.css';
 /* import React, { useState } from 'react'; */
 
 function App() {
 
+  const [mostrarMain, setMostrarMain] = useState({display:'none'});
+  const [nombreIngreado, setNombreIngresado] = useState('');
 
+  const iniciarJuego = (valorImput) => {
+    setMostrarMain({display:'block'});
+    setNombreIngresado(valorImput);
+  }
 
   return (
     <div className='App'>
@@ -21,21 +27,21 @@ function App() {
           <h1>Piedra! Papel! o Tijeras!</h1>
         </div>
 
-        <IngresaNombre/>
+        <IngresaNombre
+        iniciarJuego={iniciarJuego} />
 
       </header>
 
 
-      <main className="contenedor" id="zona-juego" style={{ display: "none" }}>
+      <main className="contenedor" id="zona-juego" style={mostrarMain}>
 
-        {/* <Juego/> 
+        <Juego /> 
 
-        <TableroPuntaje/>
+        <TableroPuntaje 
+          nombreIngreado={nombreIngreado} />
 
-        
+        {/* <Resultado/> */}
 
-        <Resultado/>
- */}
       </main>
     </div>
   );

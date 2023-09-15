@@ -1,14 +1,17 @@
-import React, { useState, useRef } from "react"; //importa la biblioteca principal de React y la asigna a la variable React
+import { useState, useRef } from 'react'; //importa la biblioteca principal de React y la asigna a la variable React
 import Boton from './Boton';
 
 import '../css/IngresaNombre.css'
 
 
-function IngresaNombre() {
+function IngresaNombre({ iniciarJuego }) {
+    const inputMargin = {
+        marginBottom: "10px"
+    };
     
     const [valorImput, setValorInput] = useState (''); //Estado para la entrada de texto (input)
     const [mostrarError, setMostrarError]  = useState (false); //Estado para variable que indicará si se muestra o no el error 
-    const mainRef = useRef(null);
+    
 
     const manejarInput = (evento) => { //Cuando se genera el evento de cambio en el capo de texto, se toma el nuevo valor ingresado y se actualiza el estado del input
         let nuevoNombre = evento.target.value.trim() //Elimino espacios al principio y final
@@ -18,7 +21,7 @@ function IngresaNombre() {
 
     const manejarEvento = () => {
         if (valorImput != "") {
-            mainRef.current.style.display = "block";
+            iniciarJuego(valorImput);
             setMostrarError(false);
         } else {
             setMostrarError(true);
@@ -28,8 +31,8 @@ function IngresaNombre() {
     return (
     <div id='contenedor_nombre'>
         <label forhtml='nombre'>Ingresa tu nombre</label>
-        <input id='nombre' type='text' autocomplete= 'off' valor= {valorImput} onChange={manejarInput} />
-        <p>{mostrarError ? 'Escribe tu nombre, por favor!' : ''}</p>
+        <input id='nombre' style={mostrarError ? inputMargin : {}} type='text' autocomplete= 'off' valor= {valorImput} onChange={manejarInput} />
+        <p style = {{color: 'red'}}>{mostrarError ? 'Escribe tu nombre, por favor!' : ''}</p>
         <a href='#zona-juego'>
             <Boton 
                 texto='Jugar!'

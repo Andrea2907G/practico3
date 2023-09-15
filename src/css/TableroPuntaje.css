@@ -1,0 +1,78 @@
+#tablero {
+    width: 100%;
+    text-align: center;
+}
+
+#resultados {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#resultados .caja-contador {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid white;
+}
+
+#resultados .caja-contador .contador {
+    height: 4vw;
+    width: 10vw;
+    background-color: wheat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+
+}
+
+#resultados .caja-contador .contador p{
+    font-size: 3rem; /* !Acomodar unidad de medida para que sea responsiva*/
+    font-weight: 500;
+}
+
+#resultados div:nth-of-type(2) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#resultados div:nth-of-type(2) button { /*Estilo para boton siguiente*/
+    display: none;
+    font-family: 'Indie Flower', cursive;
+    font-size: clamp(0.8vw, 2.5vw, 2.6rem);
+    font-weight: 500;
+    color: white;
+    text-shadow:
+    -1px -2px 0 black,
+    2px -1px 0 black,
+    -1px 2px 0 black,
+    2px 1px 0 black;
+    box-shadow: -4px 8px 8px -3px rgba(0, 0, 0, 0.895),
+    4px 0px 8px -3px rgb(0, 0, 0, 0.895);
+    background-color:#010128;
+    border: 4px solid #44447B;
+    border-radius: 15px;
+    height: 5vw;
+    width: 15vw;
+    text-align: center;
+    cursor: pointer;
+    transition: all .4s;
+}
+
+#resultados div:nth-of-type(2) button:hover {
+    box-shadow: none;
+    transform: translateY(5px);
+}
+
+#resultados div:nth-of-type(2) button:active {
+    box-shadow: none;
+}
+
+.opcion-activada {
+    background-color: #9b9b9b !important;
+    transform: translateY(15px) !important;
+    box-shadow: none !important;
+}

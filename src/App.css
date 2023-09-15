@@ -12,6 +12,7 @@ html, body {
 }
 
 body {
+    min-height: 95.1vh;
     position: relative;
     font-family: 'Indie Flower', cursive;
     color: #ffffff;

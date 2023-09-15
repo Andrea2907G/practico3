@@ -28,4 +28,4 @@ Al finalizar cada intento se emite un mensaje central en el tablero donde se mue
 
 ### Suerte!
 
-[sobre-mi](https://andrea2907g.github.io/sobre-mi/)
+[practico3](https://andrea2907g.github.io/practico3/)
