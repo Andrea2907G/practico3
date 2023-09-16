@@ -2,7 +2,7 @@ import React from "react"; //importa la biblioteca principal de React y la asign
 import Boton from './Boton';
 import '../css/TableroPuntaje.css'
 
-function TableroPuntaje({ nombreIngresado, jugador, pc, ganadorIntento, manejarSiguienteIntento, mostrarResultadoIntento }) {
+function TableroPuntaje({ nombreIngresado, jugador, pc, ganadorIntento, manejarSiguienteIntento, mostrarResultadoIntento, neutralizarBotonSiguiente }) {
 
     const estiloResultadoDeIntento = {
         fontSize: 'clamp(1.5vw, 2.8vw, 3rem)',
@@ -29,7 +29,7 @@ function TableroPuntaje({ nombreIngresado, jugador, pc, ganadorIntento, manejarS
                         texto='Siguiente!'
                         nombreDeEstilo='boton-siguiente'
                         manejarEvento={manejarSiguienteIntento}
-                        noNeutralizarEvento={mostrarResultadoIntento} /> 
+                        neutralizarEvento={neutralizarBotonSiguiente} /> 
                 </div>
 
                 <div className="caja-contador">

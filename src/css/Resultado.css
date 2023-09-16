@@ -1,0 +1,57 @@
+.ventana-modal { /*Me va a ocupar el 100% de la página*/
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #0000006c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.contenedor-ventana-modal {
+    width: 50%;
+    max-width: 700px;
+    height: auto;
+    background-color: #181823;
+    border-radius: 15px;
+    position: relative;
+    padding: 20px 0;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.contenedor-ventana-modal div{
+    background-image: url(../img/icono-cerrar.png);
+    background-size: cover;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: -14%;
+    right: -4%;
+    cursor: pointer;
+} 
+
+.contenedor-ventana-modal::after{
+    content: '';
+    position: absolute;
+    background-color: #15d603ab;
+    border: 3px solid white;
+    border-radius: 15px;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    z-index: -1; /*Mando hacia atras pseudoelemento*/
+}
+
+.mostrar-ventana-modal {
+    opacity: 1;
+    pointer-events: unset;
+}

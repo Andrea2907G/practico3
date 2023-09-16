@@ -85,3 +85,18 @@ p {
     background-color: rgba(255, 255, 255, 0.286);
 }
 
+/* Clase para numero de intentos */
+
+.numero-de-intento {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    width: 250px;
+    height: 100px;
+    font-size: clamp(1.5vw, 4vw, 4rem);
+    color:#15d603;
+    text-align: center;
+    position: absolute;
+    top: 20px;
+    right: 50px;
+}

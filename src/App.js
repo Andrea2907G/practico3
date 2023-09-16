@@ -2,7 +2,7 @@ import IngresaNombre from './componentes/IngresaNombre';
 import { useState } from 'react';
 import Juego from './componentes/Juego';
 import TableroPuntaje from './componentes/TableroPuntaje';
-/* import Resultado from './componentes/Resultado'  */
+import Resultado from './componentes/Resultado' 
 
 import './App.css';
 
@@ -25,6 +25,10 @@ function App() {
 //Con el siguiente estado controlo el cambio del Nombre del jugador que se reflejará en el tablero de puntaje
   const [nombreIngresado, setNombreIngresado] = useState('');
 
+//Con el siguiente estado establezco el numero de intento que será renderizado en la interfaz de usuario
+
+  const [numDeIntento, setNumDeIntento] = useState(1);
+
 //Los siguientes estados asignan valor booleano para cambiar el borde de la imagen que se eligió a rojo
   const [jugadorEligioPiedra, setJugadorEligioPiedra] = useState(false);
   const [jugadorEligioPapel, setJugadorEligioPapel] = useState(false);
@@ -37,7 +41,6 @@ function App() {
 //Los dos estados siguientes actualizan la eleccion hecha por el jugador y la pc para ser impresa en la interfaz de usuario.
 const [eleccionJugador, setEleccionJugador] = useState('');
 const [eleccionPc, setEleccionPc] = useState('');
-
 
 //Creo un estado que me permite cambiar el título en la interfaz, especificando el turno que corresponde
 const [cambiaTurno, setCambiaTurno] = useState('Elige tu jugada!');
@@ -56,9 +59,21 @@ const [jugador, setJugador] = useState(0);
 
 const [ganadorIntento, setGanadorIntento] = useState('');
 
-//Estado que guarda un valor booleano cuando ya está listo el resultado para ser renderizado, este valor me permite ocultar el resultado al presionar el botón siguiente restableciendoló en false
+//El siguiente estado guarda un valor booleano cuando ya está listo el resultado del intento para ser renderizado, este valor me permite ocultar el resultado del intento al presionar el botón siguiente, ya que lo restablezco en false
 
-const [mostrarResultadoIntento, setMostrarResultadoIntento] = useState (false)
+const [mostrarResultadoIntento, setMostrarResultadoIntento] = useState (false);
+
+//El siguiente estado controla la neutralizacion del escuchador de evento del boton siguiente intento.
+
+const [neutralizarBotonSiguiente, setNeutralizarBotonSiguiente] = useState(true);
+
+//El siguiente estado permitirá guardar el resultado final de la partida
+
+const [resultadoFinal, setResultadoFinal] = useState('');
+
+//Estado para controlar valor booleano de finalizacion de partida, me permite ocultar o mostrar ventana modal
+
+const [finalizoPartida, setFinalizoPartida] = useState(false);
 
 // ? ========================Funciones para manejar Estados========================
 
@@ -76,14 +91,14 @@ const [mostrarResultadoIntento, setMostrarResultadoIntento] = useState (false)
     valorEleccionJugador = 0;//Asigno valor numerico a la elección para usar en la lógica que establece el resultado del intento
     setJugadorEligioPiedra(true); //Me permite pintar de rojo el borde de la imagen piedra cuando es seleccionada por el jugador
     setEligio(true); //Me permite neutralizar el escuchador de evento de las tres imágenes una vez hecho el click en una de estas
-    setEleccionJugador('Elegiste piedra!') //Devuelve en la interfaz la eleccion del jugador
+    setEleccionJugador('Elegiste piedra!'); //Devuelve en la interfaz la eleccion del jugador
 
     //! Ejecuta la elección de la computadora
     valorEleccionPc = Math.floor(Math.random() * 3); 
 
     //! Jugada de la computadora
     
-    setCambiaTurno('Ahora la computadora!'); //Cambia el titulo h2 que refleja el turno en la interfaz 
+    setCambiaTurno('Ahora la computadora!'); //Cambia el titulo h2 que refleja el turno en la interfaz de usuario
     
 
     setTimeout(() => {  
@@ -98,7 +113,42 @@ const [mostrarResultadoIntento, setMostrarResultadoIntento] = useState (false)
         setEleccionPc('Computadora eligió tijera!');
         setPcTijera(true);
       }
-      manejarResultadoDeIntento(); 
+
+      //Logica para determinar resultado de cada intento
+      if (valorEleccionPc === valorEleccionJugador) {
+        setGanadorIntento ("Empate");
+        setMostrarResultadoIntento(true);   
+      } else if ((valorEleccionPc === 0 && valorEleccionJugador === 2) || 
+      (valorEleccionPc === 1 && valorEleccionJugador === 0) ||
+      (valorEleccionPc === 2 && valorEleccionJugador === 1)) {
+        setPc(pc + 1);
+        setGanadorIntento ("Gana la computadora"); 
+        setMostrarResultadoIntento(true);
+      } else {
+        setJugador(jugador + 1);
+        setMostrarResultadoIntento(true); //Este cambio de estado muestra el resultado del intento en pantalla y me permite neutralizar el boton siguiente una vez que se muestra
+        setGanadorIntento ("Gana el usuario");
+      } 
+      
+      //Logica de finalizacion de juego, con maximo de 5 intento o acumulacion de 3 victoria.
+      
+      if (numDeIntento === 5 || jugador === 2 || pc === 2) { //Para que termine la partida a la 3er victoria
+        setNeutralizarBotonSiguiente(true); //Neutralizo el boton siguiente intento para evitar que se presione antes de que aparezca ventana modal
+        
+        //Logica para determinar resultado final
+        if (jugador === pc) {
+          setResultadoFinal("Empate!");
+        } else if (jugador > pc) {
+          setResultadoFinal("Ganaste!");
+        } else {
+          setResultadoFinal("Perdiste!");
+        }
+        setTimeout(() => {
+          setFinalizoPartida(true); //Me permite mostrar ventana modal con un delay de 1s
+        }, 1000);
+      } else {
+        setNeutralizarBotonSiguiente(false);
+      }  
     }, 2000)
   }
 
@@ -128,7 +178,45 @@ const [mostrarResultadoIntento, setMostrarResultadoIntento] = useState (false)
         setEleccionPc('Computadora eligió tijera!');
         setPcTijera(true);
       }
-      manejarResultadoDeIntento(); 
+
+      //Logica para determinar resultado de cada intento
+      if (valorEleccionPc === valorEleccionJugador) {
+        setGanadorIntento ("Empate");
+        setMostrarResultadoIntento(true);   
+      } else if ((valorEleccionPc === 0 && valorEleccionJugador === 2) || 
+      (valorEleccionPc === 1 && valorEleccionJugador === 0) ||
+      (valorEleccionPc === 2 && valorEleccionJugador === 1)) {
+        setPc(pc + 1);
+        setGanadorIntento ("Gana la computadora"); 
+        setMostrarResultadoIntento(true);
+      } else {
+        setJugador(jugador + 1);
+        setMostrarResultadoIntento(true); //Este cambio de estado muestra el resultado del intento en pantalla y me permite neutralizar el boton siguiente una vez que se muestra
+        setGanadorIntento ("Gana el usuario");
+      } 
+
+      console.log(jugador, pc)
+      //Logica de finalizacion de juego, con maximo de 5 intento o acumulacion de 3 victorias
+      
+      if (numDeIntento === 5 || jugador === 3 || pc === 3) { 
+        setNeutralizarBotonSiguiente(true); //Neutralizo el boton siguiente intento para evitar que se presione antes de que aparezca ventana modal
+        
+        //Logica para determinar resultado final
+        console.log (jugador, pc)
+
+        if (jugador === pc) {
+          setResultadoFinal("Empate!");
+        } else if (jugador > pc) {
+          setResultadoFinal("Ganaste!");
+        } else {
+          setResultadoFinal("Perdiste!");
+        }
+        setTimeout(() => {
+          setFinalizoPartida(true); //Me permite mostrar ventana modal con un delay de 1s
+        }, 1000);
+      } else {
+        setNeutralizarBotonSiguiente(false);
+      }  
     }, 2000)
   }
 
@@ -145,10 +233,11 @@ const [mostrarResultadoIntento, setMostrarResultadoIntento] = useState (false)
 
     //! Jugada de la computadora
     
-    setCambiaTurno('Ahora la computadora!')//Cambia el titulo h2 que refleja el turno en la interfaz //!Agregar Efecto acá
+    setCambiaTurno('Ahora la computadora!'); //Cambia el titulo h2 que refleja el turno en la interfaz //!Agregar Efecto acá
     
 
     setTimeout(() => {  
+
       //Determino el mensaje de eleccion de la computadora
       if (valorEleccionPc === 0) {
         setEleccionPc('Computadora eligió piedra!');
@@ -160,43 +249,59 @@ const [mostrarResultadoIntento, setMostrarResultadoIntento] = useState (false)
         setEleccionPc('Computadora eligió tijera!');
         setPcTijera(true);
       }
-      manejarResultadoDeIntento(); 
-    }, 2000)
-  }
 
-
-  const manejarResultadoDeIntento = () => {
-
-    if (valorEleccionPc === valorEleccionJugador) {
-        console.log(valorEleccionPc, valorEleccionJugador);
-        setMostrarResultadoIntento(true);
+      //Logica para determinar resultado de cada intento
+      if (valorEleccionPc === valorEleccionJugador) {
         setGanadorIntento ("Empate");
-    }
-    else if ((valorEleccionPc === 0 && valorEleccionJugador === 2) || 
+        setMostrarResultadoIntento(true);   
+      } else if ((valorEleccionPc === 0 && valorEleccionJugador === 2) || 
       (valorEleccionPc === 1 && valorEleccionJugador === 0) ||
       (valorEleccionPc === 2 && valorEleccionJugador === 1)) {
-        console.log(valorEleccionPc, valorEleccionJugador)
-        setMostrarResultadoIntento(true);
-        setGanadorIntento ("Gana la computadora");
         setPc(pc + 1);
-    }
-
-    else {
+        setGanadorIntento ("Gana la computadora"); 
+        setMostrarResultadoIntento(true);
+      } else {
+        setJugador(jugador + 1);
         setMostrarResultadoIntento(true); //Este cambio de estado muestra el resultado del intento en pantalla y me permite neutralizar el boton siguiente una vez que se muestra
         setGanadorIntento ("Gana el usuario");
-        setJugador(jugador + 1);
-    }
-  }
+      }
 
+      console.log(jugador, pc)
+      //  Logica de finalizacion de juego, con maximo de 5 intento o acumulacion de 3 victorias
+
+      if (numDeIntento === 5 || jugador === 3 || pc === 3) { 
+        setNeutralizarBotonSiguiente(true); //Neutralizo el boton siguiente intento para evitar que se presione antes de que aparezca ventana modal
+        
+        //Logica para determinar resultado final
+
+        if (jugador === pc) {
+          setResultadoFinal("Empate!");
+        } else if (jugador > pc) {
+          setResultadoFinal("Ganaste!");
+        } else {
+          setResultadoFinal("Perdiste!");
+        }
+
+        setTimeout(() => {
+          setFinalizoPartida(true); //Me permite mostrar ventana modal con un delay de 1s
+        }, 1000);
+      } else {
+        setNeutralizarBotonSiguiente(false);
+      }  
+    }, 2000);
+  }
 
   //Creo la función que contiene la logica del boton siguiente Intento
 
   const manejarSiguienteIntento = () => {
-
     //Cambio de turno
     setEligio(false);
     setMostrarResultadoIntento(false);
     setCambiaTurno('Elige tu jugada!');
+    setNumDeIntento(numDeIntento + 1);
+    setEleccionJugador('');
+    setEleccionPc('');
+    setNeutralizarBotonSiguiente(true);
     
     //Reseteo booleanos para cambios de estilo en el boton elegido por jugador y pc
     if (jugadorEligioPiedra) {
@@ -214,9 +319,41 @@ const [mostrarResultadoIntento, setMostrarResultadoIntento] = useState (false)
     } else if (pcTijera) {
       setPcTijera(false);
     }
-    //Sumar 1 al intento para pasar al siguiente
   }
   
+  const manejarNuevaPartida = () => {
+    setNumDeIntento(1);
+    setJugador(0);
+    setPc(0);
+    setCambiaTurno('Elige tu jugada!');
+    setEligio(false);
+    setMostrarResultadoIntento(false);
+    setNeutralizarBotonSiguiente(true);
+    setFinalizoPartida(false);
+
+    if (jugadorEligioPiedra) {
+      setJugadorEligioPiedra(false);
+    } else if (jugadorEligioPapel) {
+      setJugadorEligioPapel(false);
+    } else if (jugadorEligioTijera) {
+      setJugadorEligioTijera(false);
+    }
+
+    if (pcPiedra) {
+      setPcPiedra(false);
+    } else if (pcPapel) {
+      setPcPapel(false)
+    } else if (pcTijera) {
+      setPcTijera(false);
+    }
+  }
+
+  const manejadorCruzCierre = () => {
+    setFinalizoPartida(false);
+    setNeutralizarBotonSiguiente(true);
+    setEligio(false);
+  }
+
   //Creo una función para manejar el evento click del botón siguiente, este boton actualiza el numero de Intento que como máximo pueden ser 5 y resetea las elecciones hechas
 
   return (
@@ -236,6 +373,7 @@ const [mostrarResultadoIntento, setMostrarResultadoIntento] = useState (false)
 
 
       <main className="contenedor" id="zona-juego" style={mostrarMain}>
+        <div className='numero-de-intento'>Intento {numDeIntento}</div>
 
         <Juego 
           eleccionJugador={eleccionJugador}
@@ -261,9 +399,14 @@ const [mostrarResultadoIntento, setMostrarResultadoIntento] = useState (false)
           valorEleccionJugador = {valorEleccionJugador}
           valorEleccionPc={valorEleccionPc} 
           //Podría no necesitarse este estado  utilizar directamente eligio?
-          mostrarResultadoIntento={mostrarResultadoIntento} />
+          mostrarResultadoIntento={mostrarResultadoIntento}
+          neutralizarBotonSiguiente={neutralizarBotonSiguiente} />
 
-        {/* <Resultado/> */}
+        <Resultado
+          resultadoFinal={resultadoFinal}
+          manejarNuevaPartida={manejarNuevaPartida}
+          finalizoPartida={finalizoPartida}
+          manejadorCruzCierre={manejadorCruzCierre}  />
 
       </main>
     </div>

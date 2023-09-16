@@ -46,7 +46,7 @@ button:active {
     4px 0px 8px -3px rgb(0, 0, 0, 0.895);
 }
 
-.boton-siguiente:hover, .boton.nueva-partida:hover {
+.boton-siguiente:hover, .boton-nueva-partida:hover {
 box-shadow: none;
 transform: translateY(5px);
 }
@@ -55,11 +55,7 @@ transform: translateY(5px);
 box-shadow: none;
 }
 
-.boton.nueva-partida {
+.boton-nueva-partida {
     font-size: clamp(0.8vw, 2vw, 2.5rem);
 } 
 
-.mostrar-ventana-modal {
-    opacity: 1;
-    pointer-events: unset;
-}
