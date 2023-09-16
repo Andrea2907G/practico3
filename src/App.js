@@ -5,30 +5,33 @@ import TableroPuntaje from './componentes/TableroPuntaje';
 /* import Resultado from './componentes/Resultado'  */
 
 import './App.css';
-/* import React, { useState } from 'react'; */
+
+
 
 function App() {
+
+   // ? ========================Definición de variables========================
+  
+   //creo variables con let para asignar un valor numérico a la eleccion de la pc y del jugador 0, 1 o 2
+
+  let valorEleccionPc = null;
+  let valorEleccionJugador = null;
 
   // ? ========================Creación de Estados========================
 
 //Creo un estado para cambiar la propiedad display del main, y realizar un scroll hasta ahí, este estado se ejecuta con el evento click del botón jugar
   const [mostrarMain, setMostrarMain] = useState({display:'none'});
+
 //Con el siguiente estado controlo el cambio del Nombre del jugador que se reflejará en el tablero de puntaje
   const [nombreIngresado, setNombreIngresado] = useState('');
 
-//Con los siguientes 4 estados controlo la eleccion del  jugador, setValorEleccionJugador asigna un valor numérico 0, 1 o 2 a la eleccion hecha. Los otros tres asignan valor boleano para cambiar el borde de la imagen que se eligió a rojo
-  const [eligioPiedra, setEligioPiedra] = useState(false);
-  const [eligioPapel, setEligioPapel] = useState(false);
-  const [eligioTijera, setEligioTijera] = useState(false);
+//Los siguientes estados asignan valor booleano para cambiar el borde de la imagen que se eligió a rojo
+  const [jugadorEligioPiedra, setJugadorEligioPiedra] = useState(false);
+  const [jugadorEligioPapel, setJugadorEligioPapel] = useState(false);
+  const [jugadorEligioTijera, setJugadorEligioTijera] = useState(false);
 
   //El siguiente estado lo utilizo en un operador ternario para neutralizar el escuchador de evento de las imágenes Piedra, Papel y Tijera una vez que el jugador realizó una elección
   const [eligio, setEligio] = useState(false);
-
-
-//creo variables con let para asignar un valor numérico a la eleccion de la pc y del jugador 0, 1 o 2
-
-let valorEleccionPc = null;
-let valorEleccionJugador = null;
 
 
 //Los dos estados siguientes actualizan la eleccion hecha por el jugador y la pc para ser impresa en la interfaz de usuario.
@@ -67,13 +70,13 @@ const [ganadorIntento, setGanadorIntento] = useState('');
     //! Jugada del usuario
 
     valorEleccionJugador = 0;//Asigno valor numerico a la elección para usar en la lógica que establece el resultado del intento
-    setEligioPiedra(true); //Me permite pintar de rojo el borde de la imagen piedra cuando es seleccionada por el jugador
+    setJugadorEligioPiedra(true); //Me permite pintar de rojo el borde de la imagen piedra cuando es seleccionada por el jugador
     setEligio(true); //Me permite neutralizar el escuchador de evento de las tres imágenes una vez hecho el click en una de estas
     setEleccionJugador('Elegiste piedra!') //Devuelve en la interfaz la eleccion del jugador
 
     //! Ejecuta la elección de la computadora
     valorEleccionPc = Math.floor(Math.random() * 3); 
-    
+    console.log(valorEleccionPc);
 
     //! Jugada de la computadora
     setTimeout(()=> {
@@ -83,15 +86,12 @@ const [ganadorIntento, setGanadorIntento] = useState('');
     setTimeout(() => {  
       //Determino el mensaje de eleccion de la computadora
       if (valorEleccionPc === 0) {
-        console.log(valorEleccionPc);
         setEleccionPc('Computadora eligió piedra!');
         setPcPiedra(true);
       } else if (valorEleccionPc === 1) {
-        console.log(valorEleccionPc);
         setEleccionPc('Computadora eligió papel!');
         setPcPapel(true);
       } else if (valorEleccionPc === 2) {
-        console.log(valorEleccionPc);
         setEleccionPc('Computadora eligió tijera!');
         setPcTijera(true);
       }
@@ -102,13 +102,14 @@ const [ganadorIntento, setGanadorIntento] = useState('');
   const manejarEleccionPapel = () => {
     //! Jugada del usuario
     valorEleccionJugador = 1;
-    setEligioPapel(!eligioPapel);
-    setEligio(! eligio);
+    setJugadorEligioPapel(true);
+    setEligio(true);
     setEleccionJugador('Elegiste papel!');
 
     //! Ejecuta la elección de la computadora
     valorEleccionPc = Math.floor(Math.random() * 3); 
-  
+    console.log(valorEleccionPc);
+
     //! Jugada de la computadora
     setTimeout(()=> {
       setCambiaTurno('Ahora la computadora!')//Cambia el titulo h2 que refleja el turno en la interfaz //!Agregar Efecto acá
@@ -136,13 +137,13 @@ const [ganadorIntento, setGanadorIntento] = useState('');
   const manejarEleccionTijera = () => {
     //! Jugada del usuario
     valorEleccionJugador = 2;
-    setEligioTijera(true);
+    setJugadorEligioTijera(true);
     setEligio(true);
     setEleccionJugador('Elegiste tijera!');
 
     //! Ejecuta la elección de la computadora
     valorEleccionPc = Math.floor(Math.random() * 3); 
-    
+    console.log(valorEleccionPc);
 
     //! Jugada de la computadora
     setTimeout(()=> {
@@ -154,15 +155,15 @@ const [ganadorIntento, setGanadorIntento] = useState('');
       if (valorEleccionPc === 0) {
         console.log(valorEleccionPc);
         setEleccionPc('Computadora eligió piedra!');
-        setPcPiedra(!pcPiedra);
+        setPcPiedra(true);
       } else if (valorEleccionPc === 1) {
         console.log(valorEleccionPc);
         setEleccionPc('Computadora eligió papel!');
-        setPcPapel(!pcPapel);
+        setPcPapel(true);
       } else if (valorEleccionPc === 2) {
         console.log(valorEleccionPc);
         setEleccionPc('Computadora eligió tijera!');
-        setPcTijera(!pcTijera);
+        setPcTijera(true);
       }
       manejarResultadoDeIntento(); 
     }, 2000)
@@ -175,9 +176,9 @@ const [ganadorIntento, setGanadorIntento] = useState('');
         console.log(valorEleccionPc, valorEleccionJugador);
         setGanadorIntento ("Empate");
     }
-    else if (valorEleccionPc === 0 && valorEleccionJugador === 2 || 
-      valorEleccionPc === 1 && valorEleccionJugador === 0 ||
-      valorEleccionPc === 2 && valorEleccionJugador === 1) {
+    else if ((valorEleccionPc === 0 && valorEleccionJugador === 2) || 
+      (valorEleccionPc === 1 && valorEleccionJugador === 0) ||
+      (valorEleccionPc === 2 && valorEleccionJugador === 1)) {
         console.log(valorEleccionPc, valorEleccionJugador)
         setGanadorIntento ("Gana la computadora");
         setPc(pc + 1);
@@ -194,24 +195,25 @@ const [ganadorIntento, setGanadorIntento] = useState('');
   //Creo la función que contiene la logica del boton siguiente Intento
 
   const manejarSiguienteIntento = () => {
-    
+
     setCambiaTurno('Elige tu jugada!');
     setEligio(false);
+    
 
     //Reseteo booleanos para cambios de estilo en el boton elegido por jugador y pc
-    if (valorEleccionJugador === 0) {
-      setEligioPiedra(false);
-    } else if (valorEleccionJugador === 1) {
-      setEligioPapel(false);
-    } else if (valorEleccionJugador === 2) {
-      setEligioTijera(false);
+    if (jugadorEligioPiedra) {
+      setJugadorEligioPiedra(false);
+    } else if (jugadorEligioPapel) {
+      setJugadorEligioPapel(false);
+    } else if (jugadorEligioTijera) {
+      setJugadorEligioTijera(false);
     }
 
-    if (valorEleccionPc === 0) {
+    if (pcPiedra) {
       setPcPiedra(false);
-    } else if (valorEleccionPc === 1) {
+    } else if (pcPapel) {
       setPcPapel(false)
-    } else if (valorEleccionPc === 2) {
+    } else if (pcTijera) {
       setPcTijera(false);
     }
     //Sumar 1 al intento para pasar al siguiente
@@ -241,11 +243,11 @@ const [ganadorIntento, setGanadorIntento] = useState('');
           eleccionJugador={eleccionJugador}
           eleccionPc={eleccionPc}
           manejarEleccionPiedra={manejarEleccionPiedra} 
-          eligioPiedra={eligioPiedra}
+          eligioPiedra={jugadorEligioPiedra}
           manejarEleccionPapel={manejarEleccionPapel} 
-          eligioPapel={eligioPapel}
+          eligioPapel={jugadorEligioPapel}
           manejarEleccionTijera={manejarEleccionTijera} 
-          eligioTijera={eligioTijera}
+          eligioTijera={jugadorEligioTijera}
           eligio={eligio} 
           pcPiedra={pcPiedra}
           pcPapel={pcPapel}
@@ -257,7 +259,9 @@ const [ganadorIntento, setGanadorIntento] = useState('');
           jugador={jugador}
           pc={pc}
           ganadorIntento={ganadorIntento}
-          manejarSiguienteIntento={manejarSiguienteIntento} />
+          manejarSiguienteIntento={manejarSiguienteIntento}
+          valorEleccionJugador = {valorEleccionJugador}
+          valorEleccionPc={valorEleccionPc} />
 
         {/* <Resultado/> */}
 

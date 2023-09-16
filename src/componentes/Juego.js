@@ -13,7 +13,7 @@ function Juego({ eleccionJugador, eleccionPc, manejarEleccionPiedra, eligioPiedr
     
     return(
         <section id="juego">
-            <h2 className="rojo-texto">{cambiaTurno}</h2>
+            <h2 className={eligio ? 'amarillo-texto' : 'rojo-texto'}>{cambiaTurno}</h2>
             <div className="elecciones jugador">{eleccionJugador}</div>
             <div className="elecciones pc">{eleccionPc}</div>
             <h3>Gana el mejor de 5 intentos</h3>

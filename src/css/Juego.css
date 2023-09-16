@@ -33,7 +33,7 @@
 
 .amarillo-texto { /*Esta clase modifica el estilo original del titulo h2 en #zona-juego*/
     color: #ffff00; 
-    transition: color 0.1s ease-in-out;
+    transition: color 0.3s ease-in-out;
 }
 
 #juego h3 {
