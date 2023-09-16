@@ -1,7 +1,8 @@
 import React from "react"; //importa la biblioteca principal de React y la asigna a la variable React
+import { useEffect } from "react";
 import piedraImg from '../img/piedra.png';
 import papelImg from '../img/papel.png';
-import tijerasImg from '../img/tijeras.png';
+import tijerasImg from '../img/tijeras.png'
 import '../css/Juego.css'
 
 //Este componente retorna la interfaz de usuario correspondiente a las opciones de Piedra Papel o Tijeras. 
@@ -9,11 +10,23 @@ import '../css/Juego.css'
 
 function Juego({ eleccionJugador, eleccionPc, manejarEleccionPiedra, eligioPiedra, manejarEleccionPapel, eligioPapel, manejarEleccionTijera, eligioTijera, eligio, pcPiedra, pcPapel, pcTijera, cambiaTurno }) {
 
+    useEffect( () => {
+        if (eligio) {
+            //Cambia el color del título
+            document.getElementById('turno').style.color = 'yellow';
+        } else {
+            //Restaura el color original del título
+            document.getElementById('turno').style.color = 'red';
+        }        
+    }, [eligio])
+
+
+
     const claseBase = 'opciones-imagenes';
-    
+
     return(
         <section id="juego">
-            <h2 className={eligio ? 'amarillo-texto' : 'rojo-texto'}>{cambiaTurno}</h2>
+            <h2 id="turno">{cambiaTurno}</h2>
             <div className="elecciones jugador">{eleccionJugador}</div>
             <div className="elecciones pc">{eleccionPc}</div>
             <h3>Gana el mejor de 5 intentos</h3>

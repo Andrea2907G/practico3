@@ -38,7 +38,8 @@ function IngresaNombre({ iniciarJuego }) {
             <Boton 
                 texto='Jugar!'
                 nombreDeEstilo='boton-jugar'
-                manejarEvento={manejarEvento} />
+                manejarEvento={manejarEvento}
+                noNeutralizarEvento = {true} /> {/* Evito que se neutralice el escuchador de evento del botón jugar! */}
         </a>
     </div>
     )

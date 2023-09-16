@@ -2,14 +2,18 @@ import React from "react"; //importa la biblioteca principal de React y la asign
 import Boton from './Boton';
 import '../css/TableroPuntaje.css'
 
-function TableroPuntaje({ nombreIngresado, jugador, pc, ganadorIntento, manejarSiguienteIntento }) {
+function TableroPuntaje({ nombreIngresado, jugador, pc, ganadorIntento, manejarSiguienteIntento, mostrarResultadoIntento }) {
 
+    const estiloResultadoDeIntento = {
+        fontSize: 'clamp(1.5vw, 2.8vw, 3rem)',
+        color: '#15d603'
+    }
 
     return(
         <section id="tablero">
 
             <h3>Tablero de puntajes</h3>
-
+            
             <div id="resultados">
 
                 <div className="caja-contador">
@@ -20,11 +24,12 @@ function TableroPuntaje({ nombreIngresado, jugador, pc, ganadorIntento, manejarS
                 </div>
 
                 <div style={{textAlign: "center"}}>
-                    <p>{ganadorIntento}</p> 
+                    {mostrarResultadoIntento ? <p style={estiloResultadoDeIntento}>{ganadorIntento}</p> : null}
                     <Boton 
                         texto='Siguiente!'
                         nombreDeEstilo='boton-siguiente'
-                        manejarEvento={manejarSiguienteIntento} />
+                        manejarEvento={manejarSiguienteIntento}
+                        noNeutralizarEvento={mostrarResultadoIntento} /> 
                 </div>
 
                 <div className="caja-contador">

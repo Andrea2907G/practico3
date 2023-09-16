@@ -26,16 +26,6 @@
     transition: opacity 0.1s ease-in-out; /* Transición suave de opacidad */
 }
 
-.rojo-texto {
-    color: #d60303; 
-    transition: color 0.1s ease-in-out; 
-}
-
-.amarillo-texto { /*Esta clase modifica el estilo original del titulo h2 en #zona-juego*/
-    color: #ffff00; 
-    transition: color 0.3s ease-in-out;
-}
-
 #juego h3 {
     font-size: clamp(1.5vw, 2.5vw, 2.8rem);
     font-weight: 300;

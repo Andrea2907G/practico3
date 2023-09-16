@@ -56,6 +56,10 @@ const [jugador, setJugador] = useState(0);
 
 const [ganadorIntento, setGanadorIntento] = useState('');
 
+//Estado que guarda un valor booleano cuando ya está listo el resultado para ser renderizado, este valor me permite ocultar el resultado al presionar el botón siguiente restableciendoló en false
+
+const [mostrarResultadoIntento, setMostrarResultadoIntento] = useState (false)
+
 // ? ========================Funciones para manejar Estados========================
 
 // La siguiente funcion se pasa como callback al componente IngresaNombre ejecutándose en la funcion manejarEvento del botón jugar, al llamar a esta función se envía al componente App.js el valor del input ingresado.
@@ -76,12 +80,11 @@ const [ganadorIntento, setGanadorIntento] = useState('');
 
     //! Ejecuta la elección de la computadora
     valorEleccionPc = Math.floor(Math.random() * 3); 
-    console.log(valorEleccionPc);
 
     //! Jugada de la computadora
-    setTimeout(()=> {
-      setCambiaTurno('Ahora la computadora!'); //Cambia el titulo h2 que refleja el turno en la interfaz 
-    }, 200)
+    
+    setCambiaTurno('Ahora la computadora!'); //Cambia el titulo h2 que refleja el turno en la interfaz 
+    
 
     setTimeout(() => {  
       //Determino el mensaje de eleccion de la computadora
@@ -108,25 +111,20 @@ const [ganadorIntento, setGanadorIntento] = useState('');
 
     //! Ejecuta la elección de la computadora
     valorEleccionPc = Math.floor(Math.random() * 3); 
-    console.log(valorEleccionPc);
 
     //! Jugada de la computadora
-    setTimeout(()=> {
-      setCambiaTurno('Ahora la computadora!')//Cambia el titulo h2 que refleja el turno en la interfaz //!Agregar Efecto acá
-    }, 200)
-
+    
+    setCambiaTurno('Ahora la computadora!')//Cambia el titulo h2 que refleja el turno en la interfaz //!Agregar Efecto acá
+    
     setTimeout(() => {  
       //Determino el mensaje de eleccion de la computadora
       if (valorEleccionPc === 0) {
-        console.log(valorEleccionPc);
         setEleccionPc('Computadora eligió piedra!');
         setPcPiedra(true);
       } else if (valorEleccionPc === 1) {
-        console.log(valorEleccionPc);
         setEleccionPc('Computadora eligió papel!');
         setPcPapel(true);
       } else if (valorEleccionPc === 2) {
-        console.log(valorEleccionPc);
         setEleccionPc('Computadora eligió tijera!');
         setPcTijera(true);
       }
@@ -143,25 +141,22 @@ const [ganadorIntento, setGanadorIntento] = useState('');
 
     //! Ejecuta la elección de la computadora
     valorEleccionPc = Math.floor(Math.random() * 3); 
-    console.log(valorEleccionPc);
+    
 
     //! Jugada de la computadora
-    setTimeout(()=> {
-      setCambiaTurno('Ahora la computadora!')//Cambia el titulo h2 que refleja el turno en la interfaz //!Agregar Efecto acá
-    }, 500)
+    
+    setCambiaTurno('Ahora la computadora!')//Cambia el titulo h2 que refleja el turno en la interfaz //!Agregar Efecto acá
+    
 
     setTimeout(() => {  
       //Determino el mensaje de eleccion de la computadora
       if (valorEleccionPc === 0) {
-        console.log(valorEleccionPc);
         setEleccionPc('Computadora eligió piedra!');
         setPcPiedra(true);
-      } else if (valorEleccionPc === 1) {
-        console.log(valorEleccionPc);
+      } else if (valorEleccionPc === 1) { 
         setEleccionPc('Computadora eligió papel!');
         setPcPapel(true);
       } else if (valorEleccionPc === 2) {
-        console.log(valorEleccionPc);
         setEleccionPc('Computadora eligió tijera!');
         setPcTijera(true);
       }
@@ -174,18 +169,20 @@ const [ganadorIntento, setGanadorIntento] = useState('');
 
     if (valorEleccionPc === valorEleccionJugador) {
         console.log(valorEleccionPc, valorEleccionJugador);
+        setMostrarResultadoIntento(true);
         setGanadorIntento ("Empate");
     }
     else if ((valorEleccionPc === 0 && valorEleccionJugador === 2) || 
       (valorEleccionPc === 1 && valorEleccionJugador === 0) ||
       (valorEleccionPc === 2 && valorEleccionJugador === 1)) {
         console.log(valorEleccionPc, valorEleccionJugador)
+        setMostrarResultadoIntento(true);
         setGanadorIntento ("Gana la computadora");
         setPc(pc + 1);
     }
 
     else {
-        console.log(valorEleccionPc, valorEleccionJugador);
+        setMostrarResultadoIntento(true); //Este cambio de estado muestra el resultado del intento en pantalla y me permite neutralizar el boton siguiente una vez que se muestra
         setGanadorIntento ("Gana el usuario");
         setJugador(jugador + 1);
     }
@@ -196,10 +193,11 @@ const [ganadorIntento, setGanadorIntento] = useState('');
 
   const manejarSiguienteIntento = () => {
 
-    setCambiaTurno('Elige tu jugada!');
+    //Cambio de turno
     setEligio(false);
+    setMostrarResultadoIntento(false);
+    setCambiaTurno('Elige tu jugada!');
     
-
     //Reseteo booleanos para cambios de estilo en el boton elegido por jugador y pc
     if (jugadorEligioPiedra) {
       setJugadorEligioPiedra(false);
@@ -261,7 +259,9 @@ const [ganadorIntento, setGanadorIntento] = useState('');
           ganadorIntento={ganadorIntento}
           manejarSiguienteIntento={manejarSiguienteIntento}
           valorEleccionJugador = {valorEleccionJugador}
-          valorEleccionPc={valorEleccionPc} />
+          valorEleccionPc={valorEleccionPc} 
+          //Podría no necesitarse este estado  utilizar directamente eligio?
+          mostrarResultadoIntento={mostrarResultadoIntento} />
 
         {/* <Resultado/> */}
 
