@@ -12,21 +12,23 @@ Una vez que la computadora ingreso su elección el conteo de puntos se muestran 
 Al finalizar cada intento se emite un mensaje central en el tablero donde se muestra un mensaje con el resultado de ese intento. También aparece un boton que se deberá presionar para pasar al siguiente intento. 
 
 ## Uso
-img1
+![Imagen1](https://github.com/Andrea2907G/practico3/blob/main/public/img1.jpg?raw=true)
 
 1. Deberá elegir una opción, piedra papel o tijeras según la imagen.
 
-img2
+![Imagen2](https://github.com/Andrea2907G/practico3/blob/main/public/img2.jpg?raw=true)
 
 2. Aguarde la elección de la Computadora.
 
-img4
+![Imagen4](https://github.com/Andrea2907G/practico3/blob/main/public/img4.jpg?raw=true)
 
 3. Una vez que se actualiza el tablero de puntaje. Se indicará que inicia la segunda partida. La secuencia se repite hasta alcanzar 5 intentos, o cuando uno de los dos contricantes alcance 3 victorias.
 
 
 4. Al finalizar la partida se emite un mensaje central que informa el resultado: Empate! Perdiste! o Ganaste! Y se da la opción de volver a jugar, o cerrar la ventana sin volver a jugar.
-img3
+
+![Imagen3](https://github.com/Andrea2907G/practico3/blob/main/public/img3.jpg?raw=true)
+
 5. Si se desea volver a jugar se debe presionar el botón "Nueva partida" y los valores anteriores serán reseteados.
 
 6. Los valores tambien son reseteados si se presiona nuevamente el botón "jugar!" sin que haya terminado la partida.
