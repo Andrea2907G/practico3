@@ -1,7 +1,10 @@
 import React from "react"; //importa la biblioteca principal de React y la asigna a la variable React
+import Boton from './Boton';
 import '../css/TableroPuntaje.css'
 
-function TableroPuntaje({ nombreIngreado }) {
+function TableroPuntaje({ nombreIngresado, jugador, pc, ganadorIntento, manejarSiguienteIntento }) {
+
+
     return(
         <section id="tablero">
 
@@ -9,22 +12,25 @@ function TableroPuntaje({ nombreIngreado }) {
 
             <div id="resultados">
 
-                <div class="caja-contador">
-                    <p>{nombreIngreado}</p> {/* <!-- Acá va el nombre del jugador --> */}
-                    <div class="contador">
-                        <p></p> {/* <!-- Acá van los puntos del jugador --> */}
+                <div className="caja-contador">
+                    <p>{nombreIngresado}</p> {/* <!-- Acá va el nombre del jugador --> */}
+                    <div className="contador">
+                        <p>{jugador}</p> {/* <!-- Acá van los puntos del jugador --> */}
                     </div>
                 </div>
 
                 <div style={{textAlign: "center"}}>
-                    <p></p> {/* <!-- Resultado de la partida --> */}
-                    <button id="siguiente">Siguiente!</button>
+                    <p>{ganadorIntento}</p> 
+                    <Boton 
+                        texto='Siguiente!'
+                        nombreDeEstilo='boton-siguiente'
+                        manejarEvento={manejarSiguienteIntento} />
                 </div>
 
                 <div className="caja-contador">
                     <p>PC</p>
                     <div className="contador">
-                        <p></p> {/* <!-- Acá van los puntos de la computadora --> */}
+                        <p>{pc}</p> {/* <!-- Acá van los puntos de la computadora --> */}
                     </div>
                 </div>
                 

@@ -95,3 +95,9 @@
 #juego .opciones-imagenes:active {
     box-shadow: none;
 }
+
+.opcion-activada {
+    background-color: #9b9b9b !important;
+    transform: translateY(15px) !important;
+    box-shadow: none !important;
+}

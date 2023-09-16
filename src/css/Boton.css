@@ -41,7 +41,6 @@ button:active {
 }
 
 .boton-siguiente {
-    display: none;
     font-size: clamp(0.8vw, 2.5vw, 2.6rem);
     box-shadow: -4px 8px 8px -3px rgba(0, 0, 0, 0.895),
     4px 0px 8px -3px rgb(0, 0, 0, 0.895);
