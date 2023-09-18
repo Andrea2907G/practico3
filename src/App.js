@@ -1,5 +1,5 @@
 import IngresaNombre from './componentes/IngresaNombre';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Juego from './componentes/Juego';
 import TableroPuntaje from './componentes/TableroPuntaje';
 import Resultado from './componentes/Resultado' 
@@ -113,42 +113,10 @@ const [finalizoPartida, setFinalizoPartida] = useState(false);
         setEleccionPc('Computadora eligió tijera!');
         setPcTijera(true);
       }
+      
+      //Funcion para determinar el resultado de cada intento
+      resultadoDeIntento()
 
-      //Logica para determinar resultado de cada intento
-      if (valorEleccionPc === valorEleccionJugador) {
-        setGanadorIntento ("Empate");
-        setMostrarResultadoIntento(true);   
-      } else if ((valorEleccionPc === 0 && valorEleccionJugador === 2) || 
-      (valorEleccionPc === 1 && valorEleccionJugador === 0) ||
-      (valorEleccionPc === 2 && valorEleccionJugador === 1)) {
-        setPc(pc + 1);
-        setGanadorIntento ("Gana la computadora"); 
-        setMostrarResultadoIntento(true);
-      } else {
-        setJugador(jugador + 1);
-        setMostrarResultadoIntento(true); //Este cambio de estado muestra el resultado del intento en pantalla y me permite neutralizar el boton siguiente una vez que se muestra
-        setGanadorIntento ("Gana el usuario");
-      } 
-      
-      //Logica de finalizacion de juego, con maximo de 5 intento o acumulacion de 3 victoria.
-      
-      if (numDeIntento === 5 || jugador === 2 || pc === 2) { //Para que termine la partida a la 3er victoria
-        setNeutralizarBotonSiguiente(true); //Neutralizo el boton siguiente intento para evitar que se presione antes de que aparezca ventana modal
-        
-        //Logica para determinar resultado final
-        if (jugador === pc) {
-          setResultadoFinal("Empate!");
-        } else if (jugador > pc) {
-          setResultadoFinal("Ganaste!");
-        } else {
-          setResultadoFinal("Perdiste!");
-        }
-        setTimeout(() => {
-          setFinalizoPartida(true); //Me permite mostrar ventana modal con un delay de 1s
-        }, 1000);
-      } else {
-        setNeutralizarBotonSiguiente(false);
-      }  
     }, 2000)
   }
 
@@ -179,44 +147,8 @@ const [finalizoPartida, setFinalizoPartida] = useState(false);
         setPcTijera(true);
       }
 
-      //Logica para determinar resultado de cada intento
-      if (valorEleccionPc === valorEleccionJugador) {
-        setGanadorIntento ("Empate");
-        setMostrarResultadoIntento(true);   
-      } else if ((valorEleccionPc === 0 && valorEleccionJugador === 2) || 
-      (valorEleccionPc === 1 && valorEleccionJugador === 0) ||
-      (valorEleccionPc === 2 && valorEleccionJugador === 1)) {
-        setPc(pc + 1);
-        setGanadorIntento ("Gana la computadora"); 
-        setMostrarResultadoIntento(true);
-      } else {
-        setJugador(jugador + 1);
-        setMostrarResultadoIntento(true); //Este cambio de estado muestra el resultado del intento en pantalla y me permite neutralizar el boton siguiente una vez que se muestra
-        setGanadorIntento ("Gana el usuario");
-      } 
-
-      console.log(jugador, pc)
-      //Logica de finalizacion de juego, con maximo de 5 intento o acumulacion de 3 victorias
-      
-      if (numDeIntento === 5 || jugador === 3 || pc === 3) { 
-        setNeutralizarBotonSiguiente(true); //Neutralizo el boton siguiente intento para evitar que se presione antes de que aparezca ventana modal
-        
-        //Logica para determinar resultado final
-        console.log (jugador, pc)
-
-        if (jugador === pc) {
-          setResultadoFinal("Empate!");
-        } else if (jugador > pc) {
-          setResultadoFinal("Ganaste!");
-        } else {
-          setResultadoFinal("Perdiste!");
-        }
-        setTimeout(() => {
-          setFinalizoPartida(true); //Me permite mostrar ventana modal con un delay de 1s
-        }, 1000);
-      } else {
-        setNeutralizarBotonSiguiente(false);
-      }  
+      //Funcion para determinar el resultado de cada intento
+      resultadoDeIntento()
     }, 2000)
   }
 
@@ -250,46 +182,32 @@ const [finalizoPartida, setFinalizoPartida] = useState(false);
         setPcTijera(true);
       }
 
-      //Logica para determinar resultado de cada intento
-      if (valorEleccionPc === valorEleccionJugador) {
-        setGanadorIntento ("Empate");
-        setMostrarResultadoIntento(true);   
-      } else if ((valorEleccionPc === 0 && valorEleccionJugador === 2) || 
-      (valorEleccionPc === 1 && valorEleccionJugador === 0) ||
-      (valorEleccionPc === 2 && valorEleccionJugador === 1)) {
-        setPc(pc + 1);
-        setGanadorIntento ("Gana la computadora"); 
-        setMostrarResultadoIntento(true);
-      } else {
-        setJugador(jugador + 1);
-        setMostrarResultadoIntento(true); //Este cambio de estado muestra el resultado del intento en pantalla y me permite neutralizar el boton siguiente una vez que se muestra
-        setGanadorIntento ("Gana el usuario");
-      }
+      resultadoDeIntento()
+    
 
-      console.log(jugador, pc)
-      //  Logica de finalizacion de juego, con maximo de 5 intento o acumulacion de 3 victorias
-
-      if (numDeIntento === 5 || jugador === 3 || pc === 3) { 
-        setNeutralizarBotonSiguiente(true); //Neutralizo el boton siguiente intento para evitar que se presione antes de que aparezca ventana modal
-        
-        //Logica para determinar resultado final
-
-        if (jugador === pc) {
-          setResultadoFinal("Empate!");
-        } else if (jugador > pc) {
-          setResultadoFinal("Ganaste!");
-        } else {
-          setResultadoFinal("Perdiste!");
-        }
-
-        setTimeout(() => {
-          setFinalizoPartida(true); //Me permite mostrar ventana modal con un delay de 1s
-        }, 1000);
-      } else {
-        setNeutralizarBotonSiguiente(false);
-      }  
     }, 2000);
   }
+
+  //Logica para determinar resultado de cada intento
+
+  const resultadoDeIntento = () => {
+    if (valorEleccionPc === valorEleccionJugador) {
+      setGanadorIntento ("Empate");
+      setMostrarResultadoIntento(true);   
+    } else if ((valorEleccionPc === 0 && valorEleccionJugador === 2) || 
+    (valorEleccionPc === 1 && valorEleccionJugador === 0) ||
+    (valorEleccionPc === 2 && valorEleccionJugador === 1)) {
+      setPc(pc => pc + 1);
+      setGanadorIntento ("Gana la computadora"); 
+      setMostrarResultadoIntento(true);
+    } else {
+      setJugador(jugador => jugador + 1);
+      setMostrarResultadoIntento(true); //Este cambio de estado muestra el resultado del intento en pantalla y me permite neutralizar el boton siguiente una vez que se muestra
+      setGanadorIntento ("Gana el usuario");
+    }
+  }
+    
+
 
   //Creo la función que contiene la logica del boton siguiente Intento
 
@@ -320,7 +238,32 @@ const [finalizoPartida, setFinalizoPartida] = useState(false);
       setPcTijera(false);
     }
   }
-  
+
+  //  Logica de finalizacion de juego, con maximo de 5 intento o acumulacion de 3 victorias
+
+  useEffect(() => {
+    console.log(jugador, pc, numDeIntento); //! Pruebo ultimos valores de las tres variables
+
+    if (numDeIntento <  6 || jugador === 3|| pc === 3) { //Para que termine la partida a la 3er victoria
+      setNeutralizarBotonSiguiente(true); //Neutralizo el boton siguiente intento para evitar que se presione antes de que aparezca ventana modal
+      //Logica para determinar resultado final
+      if (jugador === pc) {
+        setResultadoFinal("Empate!");
+      } else if (jugador > pc) {
+        setResultadoFinal("Ganaste!");
+      } else {
+        setResultadoFinal("Perdiste!");
+      }
+
+      setTimeout(() => {
+        setFinalizoPartida(true); //Me permite mostrar ventana modal con un delay de 1s
+      }, 500);
+    } else {
+      setNeutralizarBotonSiguiente(false);
+    } 
+  }, [pc, jugador, numDeIntento])
+
+
   const manejarNuevaPartida = () => {
     setNumDeIntento(1);
     setJugador(0);
@@ -398,7 +341,6 @@ const [finalizoPartida, setFinalizoPartida] = useState(false);
           manejarSiguienteIntento={manejarSiguienteIntento}
           valorEleccionJugador = {valorEleccionJugador}
           valorEleccionPc={valorEleccionPc} 
-          //Podría no necesitarse este estado  utilizar directamente eligio?
           mostrarResultadoIntento={mostrarResultadoIntento}
           neutralizarBotonSiguiente={neutralizarBotonSiguiente} />
 
