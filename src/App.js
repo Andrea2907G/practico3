@@ -261,9 +261,9 @@ const [finalizoPartida, setFinalizoPartida] = useState(false);
         setResultadoFinal("Perdiste!");
       }
       setTimeout(() => {
-        setFinalizoPartida(true); //Me permite mostrar ventana modal con un delay de 1s
+        setFinalizoPartida(true); //Me permite mostrar ventana modal con un delay de 1.5s
         console.log(finalizoPartida)
-      }, 500);
+      }, 1500);
     } else {
       setNeutralizarBotonSiguiente(false);
     } 
