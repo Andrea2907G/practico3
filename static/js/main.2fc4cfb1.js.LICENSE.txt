@@ -43,5 +43,3 @@
 //! Jugada de la computadora
 
 //! Jugada del usuario
-
-//! Pruebo ultimos valores de las tres variables
