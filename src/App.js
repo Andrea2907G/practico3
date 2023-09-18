@@ -1,5 +1,5 @@
 import IngresaNombre from './componentes/IngresaNombre';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Juego from './componentes/Juego';
 import TableroPuntaje from './componentes/TableroPuntaje';
 import Resultado from './componentes/Resultado' 
@@ -55,6 +55,10 @@ const[pcTijera, setPcTijera] = useState(false);
 const [pc, setPc] = useState(0);
 const [jugador, setJugador] = useState(0);
 
+//Creo referencias a estos ultimos dos estados.
+const pcRef = useRef(pc);
+const jugadorRef = useRef(jugador);
+
 //Estado para controlar resultado de cada intento
 
 const [ganadorIntento, setGanadorIntento] = useState('');
@@ -77,6 +81,7 @@ const [finalizoPartida, setFinalizoPartida] = useState(false);
 
 // ? ========================Funciones para manejar Estados========================
 
+
 // La siguiente funcion se pasa como callback al componente IngresaNombre ejecutándose en la funcion manejarEvento del botón jugar, al llamar a esta función se envía al componente App.js el valor del input ingresado.
   const iniciarJuego = (valorImput) => {
     setMostrarMain({display:'block'});
@@ -87,7 +92,6 @@ const [finalizoPartida, setFinalizoPartida] = useState(false);
   const manejarEleccionPiedra = () => {
     
     //! Jugada del usuario
-
     valorEleccionJugador = 0;//Asigno valor numerico a la elección para usar en la lógica que establece el resultado del intento
     setJugadorEligioPiedra(true); //Me permite pintar de rojo el borde de la imagen piedra cuando es seleccionada por el jugador
     setEligio(true); //Me permite neutralizar el escuchador de evento de las tres imágenes una vez hecho el click en una de estas
@@ -115,7 +119,9 @@ const [finalizoPartida, setFinalizoPartida] = useState(false);
       }
       
       //Funcion para determinar el resultado de cada intento
-      resultadoDeIntento()
+      resultadoDeIntento();
+
+      finalizacionDelJuego();
 
     }, 2000)
   }
@@ -148,7 +154,9 @@ const [finalizoPartida, setFinalizoPartida] = useState(false);
       }
 
       //Funcion para determinar el resultado de cada intento
-      resultadoDeIntento()
+      resultadoDeIntento();
+
+      finalizacionDelJuego();
     }, 2000)
   }
 
@@ -182,7 +190,9 @@ const [finalizoPartida, setFinalizoPartida] = useState(false);
         setPcTijera(true);
       }
 
-      resultadoDeIntento()
+      resultadoDeIntento();
+
+      finalizacionDelJuego();
     
 
     }, 2000);
@@ -207,8 +217,6 @@ const [finalizoPartida, setFinalizoPartida] = useState(false);
     }
   }
     
-
-
   //Creo la función que contiene la logica del boton siguiente Intento
 
   const manejarSiguienteIntento = () => {
@@ -241,27 +249,25 @@ const [finalizoPartida, setFinalizoPartida] = useState(false);
 
   //  Logica de finalizacion de juego, con maximo de 5 intento o acumulacion de 3 victorias
 
-  useEffect(() => {
-    console.log(jugador, pc, numDeIntento); //! Pruebo ultimos valores de las tres variables
-
-    if (numDeIntento <  6 || jugador === 3|| pc === 3) { //Para que termine la partida a la 3er victoria
+  const finalizacionDelJuego = () => {
+    if (numDeIntento === 5 || pcRef.current === 3|| jugadorRef.current === 3) { //Para que termine la partida a la 3er victoria
       setNeutralizarBotonSiguiente(true); //Neutralizo el boton siguiente intento para evitar que se presione antes de que aparezca ventana modal
       //Logica para determinar resultado final
-      if (jugador === pc) {
+      if (jugadorRef.current === pcRef.current) {
         setResultadoFinal("Empate!");
-      } else if (jugador > pc) {
+      } else if (jugadorRef.current > pcRef.current) {
         setResultadoFinal("Ganaste!");
       } else {
         setResultadoFinal("Perdiste!");
       }
-
       setTimeout(() => {
         setFinalizoPartida(true); //Me permite mostrar ventana modal con un delay de 1s
+        console.log(finalizoPartida)
       }, 500);
     } else {
       setNeutralizarBotonSiguiente(false);
     } 
-  }, [pc, jugador, numDeIntento])
+  }
 
 
   const manejarNuevaPartida = () => {
@@ -297,7 +303,12 @@ const [finalizoPartida, setFinalizoPartida] = useState(false);
     setEligio(false);
   }
 
-  //Creo una función para manejar el evento click del botón siguiente, este boton actualiza el numero de Intento que como máximo pueden ser 5 y resetea las elecciones hechas
+  // Actualizo las referencias de useRef cuando pc o jugador cambian
+
+  useEffect(() => {
+    pcRef.current = pc;
+    jugadorRef.current = jugador;
+  }, [pc, jugador]);
 
   return (
     <div className='App'>
@@ -310,13 +321,13 @@ const [finalizoPartida, setFinalizoPartida] = useState(false);
         </div>
 
         <IngresaNombre
-        iniciarJuego={iniciarJuego} />
+        iniciarJuego={iniciarJuego} /> {/* Formulario para ingreso de nombre */}
 
       </header>
 
 
       <main className="contenedor" id="zona-juego" style={mostrarMain}>
-        <div className='numero-de-intento'>Intento {numDeIntento}</div>
+        <div className='numero-de-intento'>Intento {numDeIntento}</div> 
 
         <Juego 
           eleccionJugador={eleccionJugador}

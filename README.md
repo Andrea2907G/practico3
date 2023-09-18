@@ -56,7 +56,19 @@ Además se usaron eventos para interactividad, estados para controlar elementos 
 
 Se utilizaron 6 hojas de estilos, 1 por cada componente contenidas en la carpeta css. 
 
-Incialmente se crearon funciones para establecer lógica de resultado de cada ronda, además de actualización de marcadores, pero tuve problemas con el uso del valor actual del estado en una función diferente a la función donde se actualizó dicho estado. El problema era que en la funcion donde quería utilizar el estado le llegaba un valor desactualizado del mismo. Esto a pesar que el codigo de la funcion que manejaba esa actualizacion se encontraba antes en la linea de ejecución. Estoy buscando la solución.
+Funciones creadas en componente App.js:
+
+1. Manejadora de evento click del boton Jugar!: iniciarJuego() 
+2. Manejadora de evento click en imagen Piedra: manejarEleccionPiedra()
+3. Manejadora de evento click en imagen Papel: manejarEleccionPapel()
+4. Manejadora de evento click en imagen Tijera: manejarEleccionTijera()
+5. Funcion que determina el resultado de cada intento o ronda: resultadoDeIntento()
+6. Manejadora de evento click en boton Siguiente!: manejarSiguienteIntento()
+7. Funcion para finalización de partida y determinacion de resultado final: finalizacionDelJuego()
+8. Manejadora de evento click en botón Nueva partida: manejarNuevaPartida()
+9. Manejadora de evento click en botón de cruz de cierre de ventana modal: manejadorCruzCierre()
+10. Se utilizó useEffect para actualizar las referencias a los valores de pc y jugador, y se utilizaron estas ultimas referencias en la funcion finalizacionDelJuego() como intento para utilizar el último valor de esas variables en las demas funciones. No soluciono el problema.
+
 
 
 
